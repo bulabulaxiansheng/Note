@@ -400,6 +400,9 @@
   可以修饰类————这个类不能去扩展，不能有子类
   可以修饰方法——不让别人修改这个方法
 4、static 关键字
+  静态成员一旦被加载，只有脚本结束才被释放
+  在静态方法里，不能调用非静态成员
+  只要能使用静态成员就是用静态成员
   class Person{
   	public $name;
   	public $age;
@@ -432,3 +435,36 @@
   static 的作用是减少属性不必要的重复，把这一个属性放在静态段里
   只要类名出现，static 属性就加载了
   Person::$country//这有静态的成员属性才能这样访问
+  self::$country//self代表自己类的
+/*
+单态设计模式
+ */
+防止类在一个程序里调用多次，就好比如防止一个人有多部手机，首先要封杀在外部使用$p=new Person()来实例化多个对象，
+把构造函数私有化 private 这样就不能在外部实例化对象了，那外部怎么用这个类呢，就是在内部实例化，创造一个静态方法，
+实例化对象;但是在外部多次静态化调用这个方法还是会多次实例化对象,所以要在这个方法里
+class Person{
+	static $obj=null;
+	private function __construct(){
+
+	}
+	static function getObj(){
+		if(is_null(self::$obj))
+			self::$obj=new self;
+		return self::$obj;
+	}
+
+	function __destruct(){
+		echo "######################";
+	}
+
+	function say(){
+		echo "aaaaaaaaaaaaaaaaaaaaaa";
+	}
+}
+
+$p=Person::getobj();
+$p=Person::getobj();
+$p=Person::getobj();
+$p=Person::getobj();
+$p=Person::getobj();
+$p=Person::getobj();
