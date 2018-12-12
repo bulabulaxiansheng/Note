@@ -441,7 +441,8 @@
  */
 防止类在一个程序里调用多次，就好比如防止一个人有多部手机，首先要封杀在外部使用$p=new Person()来实例化多个对象，
 把构造函数私有化 private 这样就不能在外部实例化对象了，那外部怎么用这个类呢，就是在内部实例化，创造一个静态方法，
-实例化对象;但是在外部多次静态化调用这个方法还是会多次实例化对象,所以要在这个方法里
+实例化对象;但是在外部多次静态化调用这个方法还是会多次实例化对象,所以要在这个方法里使用条件来筛选，如果$obj 是空的
+给他附上实例化的值，如果不为空直接返回，static $obj 则一直在静态里存在不被销毁，调用完方法成员后才被销毁
 class Person{
 	static $obj=null;
 	private function __construct(){
@@ -468,3 +469,20 @@ $p=Person::getobj();
 $p=Person::getobj();
 $p=Person::getobj();
 $p=Person::getobj();
+$p->say();
+/*
+const关键字
+ */
+PHP用 define()来定义常量
+类里面用 const 来定义
+常量建议使用大写，不能使用$
+常量一定在声明时就给好初值
+常量的访问方式和static的访问方式相同，但只能读
+class Demo{
+	const SEX="男";
+	static function say(){
+		echo "我的性别是：".self::SEX."<br>";
+	}
+}
+echo Demo::SEX;
+Demo::say();
