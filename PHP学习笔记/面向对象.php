@@ -314,3 +314,119 @@
 
     }*/
   }
+ 2、继承中的重载（覆盖）
+   在子类中可以写和父类同名的方法
+
+   class Person{
+    var $name;
+    var $age;
+    var $sex;
+
+    function __construct($name,$age,$sex){
+    	$this->name=$name;
+    	$this->age=$age;
+    	$this->sex=$sex;
+    }
+
+    function say(){
+    	echo "我的名字是：{},我的年龄是：{},我的性别是：{}";
+    }
+
+    function eat(){
+
+    }
+
+    function run(){
+
+    }
+  }
+
+  class Student extends Person{
+  	var $school;
+  	//这个方法可以覆盖父类同名名的方法
+  	function say(){
+  		$this->say();//用这个调用父类的方法产生递归死循环
+  		Person::say();//如果父类的名称变了就不好了
+  		parent::say();//用这个访问父类被覆盖的方法
+  		echo "我所在的学校：{$this->school}<br>";
+  	}
+  }
+
+  子类想要覆盖父类的构造方法时，为了使子类构造方法的参数随着父类构造方法的改变而改变，要在子类中重新调用一下父类的构造方法
+   class Person{
+    var $name;
+    var $age;
+    var $sex;
+
+    function __construct($name,$age,$sex){
+    	$this->name=$name;
+    	$this->age=$age;
+    	$this->sex=$sex;
+    }
+
+    function say(){
+    	echo "我的名字是：{},我的年龄是：{},我的性别是：{}";
+    }
+
+    function eat(){
+
+    }
+
+    function run(){
+
+    }
+  }
+  /*
+     重点
+   */
+  class Student extends Person{
+  	var $school;
+  	function __construct($name,$age,$sex,$school){
+  		parent::__construct($name,$age,$sex);
+  		$this->school=$school;
+  	}
+  	//这个方法可以覆盖父类同名名的方法
+  	function say(){
+  		$this->say();//用这个调用父类的方法产生递归死循环
+  		Person::say();//如果父类的名称变了就不好了
+  		parent::say();//用这个访问父类被覆盖的方法
+  		echo "我所在的学校：{$this->school}<br>";
+  	}
+  }
+  子类只能大于或等于父类的权限，不能小于
+3、面向对象常见关键字
+  instanceof 判断对象属不属于某各类
+  final 在PHP不定义常量，不能修饰成员属性
+  可以修饰类————这个类不能去扩展，不能有子类
+  可以修饰方法——不让别人修改这个方法
+4、static 关键字
+  class Person{
+  	public $name;
+  	public $age;
+  	public $sex;
+  	public static $country="中国";
+  	function __construct($name,$age,$sex){
+  		$this->name=$name;
+  		$this->age=$age;
+  		$this->sex->$sex;
+  	}
+
+  	public function say(){
+
+  	}
+
+  	function eat(){
+
+  	}
+
+  	function run(){
+
+  	}
+  }
+
+  $p1=new Person("张三",10,"男");
+  $p1=new Person("李四",10,"男");
+  $p1=new Person("张三",10,"男");
+  $p1=new Person("张三",10,"男");
+  $p1=new Person("张三",10,"男");
+  static 的作用是减少属性不必要的重复，把这一个属性放在静态端里
