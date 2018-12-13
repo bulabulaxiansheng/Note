@@ -691,3 +691,10 @@ class Person{
 
 $p=new Person("张三",20,"男");
 Person::hello();
+/*
+__autoload()魔术方法
+ */
+只要加载类的时候，就会自动调用
+function __autoload($classname){
+	include strtolower($classname).".class.php";
+}
