@@ -560,3 +560,17 @@ $p=new Person("张三",10,"男");
 $p->aaa("aaaaaaaaaaaa");
 $p->bbb("bbbbbbbbbbbb");
 $p->ccc("cccccccccccc");
+/*
+对象串行化（序列化）
+ */
+把对象转化为字符串是串行化
+将字符串转回对象是反串行化
+注意（串行化的时机）：
+将对象在网络中传输
+讲对象长时间保存
+$str=serialize($p) 把对象进行串行化
+file_put_contents("objstr.txt", $str); 将串行好的字符串保存在文件中
+
+$str=file_get_contents("objstr.txt"); 读出文件的字符串
+$p=unserialize($str); 反串行化形成对象
+作用：把对象串行化后，
