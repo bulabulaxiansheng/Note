@@ -670,3 +670,24 @@ class Person{
 
 $p=new Person("张三",20,"男");
 $p();//自动调用__invoke这个方法
+/*
+__callstatic() 使用静态类调用不存在的方法时，自定调用这个方法
+ */
+class Person{
+	var $name;
+	var $age;
+	var $sex;
+
+	function __construct($name,$age,$sex){
+		$this->name=$name;
+		$this->age=$age;
+		$this->sex=$sex;
+	}
+
+	static function __callStatic($method,$args){//使用静态类调用不存在的方法时，自定调用这个方法
+		echo "你调用的静态方法{$method}不存在";
+	}
+}
+
+$p=new Person("张三",20,"男");
+Person::hello();
