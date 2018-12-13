@@ -573,4 +573,100 @@ file_put_contents("objstr.txt", $str); 将串行好的字符串保存在文件�
 
 $str=file_get_contents("objstr.txt"); 读出文件的字符串
 $p=unserialize($str); 反串行化形成对象
-作用：把对象串行化后，
+作用：把对象串行化后，放到一个文件里，这样多个PHP可以共用，就不用实例化了
+function __sleep() 在串行化时，自动调用的方法，可以设置需要串行化的属性，返回一个数组，在这个数组里的属性会被串行化
+function __wakeup() 对串行化回来的对象进行初始化
+class Person{
+	public $name;
+	public $age;
+	public $sex;
+
+	public $marr=array("aaa","bbb","ccc","ddd");
+
+	function __sleep(){
+		return array("name","age");//只串行化$age和$name
+	}
+
+	function __wakeup(){
+		$this->age=12;
+	}
+
+	function __call($method,$args){
+		if(in_array($method, $this->marr)){
+			echo $args[0]."<br>";
+		}else{
+			echo "你调用的方法{$method}()不存在！<br>";
+		}
+	}
+}
+
+$p=new Person("张三",10,"男");
+$str=serialize($p);
+$p1=unserialize($str);
+/*
+JSON格式
+ */
+$arr=array("name"=>"zhangsan","age"=>10,"sex"="男");
+//串行化
+$str=json_encode($arr);
+//反串行化
+$parr=json_decode($str);//默认转化为对象
+$parr->name;
+$parr=json_decode($str,true);//第二个参数true,再将序列化转化为数组
+echo $parr['name'];
+/*
+eval()函数，解析并执行PHP代码
+ */
+$str="echo 'abc';";
+eval($str);//解析$str字符串的PHP代码
+$arr=array("one"=>1,"two"=>"222222","three"=>333);
+$a=var_export($arr,true);//把数组赋值给$a，$a是字符串
+$a=eval('$b='.var_export($arr,true).";");
+var_dump($b);//$b是数组
+/*
+__set_state()魔术方法
+ */
+在使用 var_export() 这个方法时，自动调用这个魔术方法
+class Person{
+	var $name;
+	var $age;
+	var $sex;
+
+	function __construct($name,$age,$sex){
+		$this->name=$name;
+		$this->age=$age;
+		$this->sex=$sex;
+	}
+
+	static function __set_state($arr){ //这个函数必须是static的
+		$p=new Person("李四",30,"女");
+		return $p;
+	}
+}
+
+$p=new Person("张三",20,"男");
+
+eval('$b='.var_export($p,true).";");
+
+var_dump($b);
+/*
+__invoke()
+ */
+class Person{
+	var $name;
+	var $age;
+	var $sex;
+
+	function __construct($name,$age,$sex){
+		$this->name=$name;
+		$this->age=$age;
+		$this->sex=$sex;
+	}
+
+	function __invoke(){
+		echo "在对象引用后自动调用这个方法";
+	}
+}
+
+$p=new Person("张三",20,"男");
+$p();//自动调用__invoke这个方法
