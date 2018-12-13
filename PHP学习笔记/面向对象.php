@@ -203,7 +203,7 @@
   			return false;
   		}//不能判断年龄是否存在
   		return isset($this->$proname);
-  	}//判断一个私有属性是否存在是，自动调用这个方法
+  	}//判断一个私有属性是否存在，自动调用这个方法
   	function __unset($proname){
   		if($proname!=="age"){
   			unset($this->$proname);
@@ -486,3 +486,77 @@ class Demo{
 }
 echo Demo::SEX;
 Demo::say();
+/*
+魔术方法
+ */
+__toString 直接使用echo print printf 输出一个对象引用时，自定调用，将对象形成字符串返回
+class Person{
+	public $name;
+	public $age;
+	public $sex;
+
+	function __construct($name,$age,$sex){
+		$this->name=$name;
+		$this->age=$age;
+		$this->sex=$sex;
+	}
+
+	function say(){
+
+	}
+
+	function __toString(){
+		return "aaaaaaaaaaaaa";
+	}
+}
+
+$p=new Person("张三",18,"男");
+echo $p;
+使用clone克隆对象，$p1=clone $p2对相当于在堆内存克隆了一个，$p1=$p2只是把栈内存的地址给了p1，它还是指向的同一个对象,而前面的是在堆内存里直接复制了一个对象
+__clone()使用clone时自动调用，和构造方法一样，对新克隆的对象进行初始化
+class Person{
+	public $name;
+	public $age;
+	public $sex;
+
+	function __construct($name,$age,$sex){
+		$this->name=$name;
+		$this->age=$age;
+		$this->sex=$sex;
+	}
+
+	function say(){
+
+	}
+
+	function __clone(){
+		//初始化设置
+		$this->name="克隆的张三";//这里的$this代表的是副本的成员属性
+	}
+}
+
+$p=new Person("张三",18,"男");
+$p1=clone $p;
+__call()魔术方法
+在调用的对象中，方法不存在时，自动调用的方法
+有两个参数，调用的不存在的方法名，第二个参数，调用这个不存在的方法参数
+class Person{
+	public $name;
+	public $age;
+	public $sex;
+
+	public $marr=array("aaa","bbb","ccc","ddd");
+
+	function __call($method,$args){
+		if(in_array($method, $this->marr)){
+			echo $args[0]."<br>";
+		}else{
+			echo "你调用的方法{$method}()不存在！<br>";
+		}
+	}
+}
+
+$p=new Person("张三",10,"男");
+$p->aaa("aaaaaaaaaaaa");
+$p->bbb("bbbbbbbbbbbb");
+$p->ccc("cccccccccccc");
