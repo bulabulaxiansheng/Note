@@ -698,3 +698,14 @@ __autoload()魔术方法
 function __autoload($classname){
 	include strtolower($classname).".class.php";
 }
+/*
+抽象方法作用
+ */
+1、只要使用 abstract 修饰的类，就是抽象类
+2、如果声明一个抽象类，则这个类必须使用 abstract 关键字来修饰
+3、除了在抽象类中可以有抽象方法以外，和正常类的完全一样
+abstract class Person{//抽象类
+	abstract function say(){//抽象方法
+
+	}
+}
