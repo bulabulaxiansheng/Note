@@ -709,3 +709,85 @@ abstract class Person{//抽象类
 
 	}
 }
+4、抽象类不能实例化对象
+5、如果看见了抽象类，就必须写这个类的子类，将抽象类中的抽象方法覆盖
+6、子类必须全部覆盖抽象方法，才能创建对象，如果没有全部覆盖，则类必须是抽象类
+/*
+面向对象接口技术
+ */
+1、抽象类和接口都有抽象方法
+2、抽象类和接口都不能创建实例对象
+3、抽象类和接口的实用意义相同
+抽象类和接口相比，特殊？
+1、接口中的方法，必须全部是抽象方法
+2、接口中的成员属性，必须是常量
+3、接口中所有的权限必须是共有的（public）
+4、声明接口不适用 class，而使用 interface；
+//声明一个接口
+interface Demo{
+	const NAME="妹子";
+	const AGE=20;
+	//错误的写法
+	public $name;
+	//错误的写法
+	function test(){
+
+	}
+	//接口中的抽象方法不需要使用abstract
+	function test();
+	function test1();
+	function test2();
+}
+//接口不能创建对象，但是可以用静态方法访问
+echo Demo::NAME;
+接口应用的一些细节：
+1、可以使用 extends 继承接口(只有扩展抽象方法，不有覆盖的作用)
+2、可以使用一个类实现接口中的全部方法，也可以使用一个抽象类，来实现接口中的部分方法（）
+3、先继承再实现
+interface Demo{
+	const NAME="妹子";
+	const AGE=20;
+	//错误的写法
+	public $name;
+	//错误的写法
+	function test(){
+
+	}
+	//接口中的抽象方法不需要使用abstract
+	function test();
+	function test1();
+	function test2();
+}
+
+interface Test extends Demo{
+	function test4();
+}
+class World{
+	function test5(){
+
+	}
+}
+interface Abc{
+	function test6();
+}
+class Hello extends World implements Test{
+	function test(){
+
+	}
+	function test1(){
+
+	}
+	function test2(){
+
+	}
+	function test3(){
+
+	}
+	function test4(){
+
+	}
+}
+4、实现多的接口，只需要使用逗号分开就行
+class Hello extends World implements Test,Abc{
+	
+}
