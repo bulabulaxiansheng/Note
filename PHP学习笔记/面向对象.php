@@ -791,3 +791,63 @@ class Hello extends World implements Test{
 class Hello extends World implements Test,Abc{
 	
 }
+/*
+面向对象的多态
+ */
+多态特性
+1、程序的扩展所准备的（按照特定的规范来开店，相当于标准化）
+2、相当于一个笔记本，它的USB可以连接各种设备
+interface USB{
+	const WIDTH=12;
+	const HEIGHT=3;
+
+	function load();
+	function run();
+	function stop();
+}
+
+class Computer{
+	function useUSB(USB $usb){
+		$usb->load();
+		$usb->run();
+		$usb->stop();
+	}
+}
+
+class House implements USB{
+	function load(){
+		echo "加载鼠标成功！<br>";
+	}
+
+	function run(){
+		echo "运行鼠标功能！<br>";
+	}
+
+	function stop(){
+		echo "鼠标功能结束!<br>";
+	}
+}
+
+class KeyPress implements USB{
+	function load(){
+		echo "加载键盘成功！<br>";
+	}
+	function run(){
+		echo "运行键盘成功！<br>";
+	}
+	function stop(){
+		echo "停止键盘使用！<br>";
+	}
+}
+
+class Worker{
+	function work(){
+		$c=new Cpmputer();
+		$n=new House;
+		$k=new KeyPress;
+		$c->useUSB($n);
+		$c->useUSB($k);
+	}
+}
+$w=new Worker;
+$w->work();
