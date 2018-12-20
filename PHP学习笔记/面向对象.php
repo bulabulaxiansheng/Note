@@ -851,3 +851,6 @@ class Worker{
 }
 $w=new Worker;
 $w->work();
+/*
+图形计算器实例
+ */
