@@ -854,3 +854,43 @@ $w->work();
 /*
 图形计算器实例
  */
+/*
+命名空间
+ */
+1、常量
+2、函数
+3、类
+以上3个都不能重新定义
+4、声明命名空间前面不能有任何字符，除了 declare();
+namespace myself;
+function var_dump($a){
+	echo $a;
+}
+var_dump($a);
+\var_dump(100);
+/*
+另一个
+ */
+namespace meizi;
+const AAA=1;
+class Demo{
+	static function one(){
+		echo "111111111111111<br>";
+	}
+}
+
+function test(){
+	echo "22222222222222222222<br>";
+}
+
+test();
+\meizi\test();
+echo AAA."<br>";
+echo \meizi\AAA."<br>";
+
+Demo::one();
+\meizi\Demo::one();
+/*
+子命名空间
+ */
+namespace meizi\pl;
