@@ -698,3 +698,159 @@ __autoload()魔术方法
 function __autoload($classname){
 	include strtolower($classname).".class.php";
 }
+/*
+抽象方法作用
+ */
+1、只要使用 abstract 修饰的类，就是抽象类
+2、如果声明一个抽象类，则这个类必须使用 abstract 关键字来修饰
+3、除了在抽象类中可以有抽象方法以外，和正常类的完全一样
+abstract class Person{//抽象类
+	abstract function say(){//抽象方法
+
+	}
+}
+4、抽象类不能实例化对象
+5、如果看见了抽象类，就必须写这个类的子类，将抽象类中的抽象方法覆盖
+6、子类必须全部覆盖抽象方法，才能创建对象，如果没有全部覆盖，则类必须是抽象类
+/*
+面向对象接口技术
+ */
+1、抽象类和接口都有抽象方法
+2、抽象类和接口都不能创建实例对象
+3、抽象类和接口的实用意义相同
+抽象类和接口相比，特殊？
+1、接口中的方法，必须全部是抽象方法
+2、接口中的成员属性，必须是常量
+3、接口中所有的权限必须是共有的（public）
+4、声明接口不适用 class，而使用 interface；
+//声明一个接口
+interface Demo{
+	const NAME="妹子";
+	const AGE=20;
+	//错误的写法
+	public $name;
+	//错误的写法
+	function test(){
+
+	}
+	//接口中的抽象方法不需要使用abstract
+	function test();
+	function test1();
+	function test2();
+}
+//接口不能创建对象，但是可以用静态方法访问
+echo Demo::NAME;
+接口应用的一些细节：
+1、可以使用 extends 继承接口(只有扩展抽象方法，不有覆盖的作用)
+2、可以使用一个类实现接口中的全部方法，也可以使用一个抽象类，来实现接口中的部分方法（）
+3、先继承再实现
+interface Demo{
+	const NAME="妹子";
+	const AGE=20;
+	//错误的写法
+	public $name;
+	//错误的写法
+	function test(){
+
+	}
+	//接口中的抽象方法不需要使用abstract
+	function test();
+	function test1();
+	function test2();
+}
+
+interface Test extends Demo{
+	function test4();
+}
+class World{
+	function test5(){
+
+	}
+}
+interface Abc{
+	function test6();
+}
+class Hello extends World implements Test{
+	function test(){
+
+	}
+	function test1(){
+
+	}
+	function test2(){
+
+	}
+	function test3(){
+
+	}
+	function test4(){
+
+	}
+}
+4、实现多的接口，只需要使用逗号分开就行
+class Hello extends World implements Test,Abc{
+	
+}
+/*
+面向对象的多态
+ */
+多态特性
+1、程序的扩展所准备的（按照特定的规范来开店，相当于标准化）
+2、相当于一个笔记本，它的USB可以连接各种设备
+interface USB{
+	const WIDTH=12;
+	const HEIGHT=3;
+
+	function load();
+	function run();
+	function stop();
+}
+
+class Computer{
+	function useUSB(USB $usb){
+		$usb->load();
+		$usb->run();
+		$usb->stop();
+	}
+}
+
+class House implements USB{
+	function load(){
+		echo "加载鼠标成功！<br>";
+	}
+
+	function run(){
+		echo "运行鼠标功能！<br>";
+	}
+
+	function stop(){
+		echo "鼠标功能结束!<br>";
+	}
+}
+
+class KeyPress implements USB{
+	function load(){
+		echo "加载键盘成功！<br>";
+	}
+	function run(){
+		echo "运行键盘成功！<br>";
+	}
+	function stop(){
+		echo "停止键盘使用！<br>";
+	}
+}
+
+class Worker{
+	function work(){
+		$c=new Cpmputer();
+		$n=new House;
+		$k=new KeyPress;
+		$c->useUSB($n);
+		$c->useUSB($k);
+	}
+}
+$w=new Worker;
+$w->work();
+/*
+图形计算器实例
+ */
