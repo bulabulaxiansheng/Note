@@ -894,3 +894,14 @@ Demo::one();
 子命名空间
  */
 namespace meizi\pl;
+__NAMESPACE__
+/*
+，命名空间别名
+ */
+namespace net\lampbrother\www;
+use net\lampbrother\www as lamp;
+function demo(){
+	echo "111111111111111<br>";
+}
+
+lamp\demo();
