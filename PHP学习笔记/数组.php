@@ -51,3 +51,24 @@ $arr=["one"=>"妹子","峰哥","第三者"];
 while(list($key,$val)=each($arr)){//虽然each的返回值里有四个元素，但是list只接受关联数组0,1.....，所以可以得到返回值和键
 	echo "{$key}=>{$val}<br>";
 }
+/*
+指针
+ */
+$arr=array("妹子","峰哥","观众","小四","地方");
+echo "当前的位置，第一个:".key($arr)."=>".current($arr)."<br>";
+next($arr);//指针下移
+end($arr);//最后一个
+prev($arr);//上一个
+reset($arr);//回到最初位置
+/*
+超全局数组
+ */
+$_SERVER
+$_ENV
+$_GET
+$_POST
+$_REQUEST
+$_FILES
+$_COOKIE
+$_SESSION
+$GLOBALS
