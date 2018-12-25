@@ -84,14 +84,22 @@ $GLOBALS
 </form>
 $_GET和$_POST也可以传递数组
 /*
-数组的查询函数
+数组的查询函数（键值操作）
  */
 array_key_exists();//检查数组里是否有指定的键名或索引
 isset();//检测变量是否已设置并且非 NULL 
 array_keys();//返回数组中部分的或所有的键名 
 in_array();//检查数组中是否存在某个值
 array_search();//在数组中搜索给定的值，如果成功则返回首个相应的键名
+array_flip();//交换数组中的键和值,有可能出现值相同，换过来键名相同的数组，那么后面的会覆盖前面的
+array_reverse();//返回单元顺序相反的数组
 1、isset()和 array_key_exists()的却别在于：
 	$lamp=array("hello"=>null);
 	isset($lamp);//将会返回假
 	array_key_exists($lamp);//将会返回真
+/*
+统计元素个数和唯一性的函数
+ */
+count();//count($arr,1);计算子数组
+array_count_values();//返回一个数组： 数组的键是 array 里单元的值； 数组的值是 array 单元的值出现的次数。
+array_unique();//移除数组中重复的值
