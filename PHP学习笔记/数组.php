@@ -65,10 +65,33 @@ reset($arr);//回到最初位置
  */
 $_SERVER
 $_ENV
-$_GET
-$_POST
-$_REQUEST
+$_GET//接受用户通过URL向服务器传的参数
+$_POST//接受用户通过http协议向服务器传的参数
+$_REQUEST//
 $_FILES
 $_COOKIE
 $_SESSION
 $GLOBALS
+<a href="demo.php?action[]=add&action[]=mod&id=5&name=admin">测试页面</a>
+
+<form action="demo.php?age=aaaaa" method="post">
+	username:<input type="text" name="name[]"/><br>
+	username:<input type="text" name="name[]"/><br>
+	username:<input type="text" name="name[]"/><br>
+	age:<input type="text" name="age"/><br>
+	age:<input type="text" name="sex"/><br>
+	<input type="submit" name="sub" value="提交">
+</form>
+$_GET和$_POST也可以传递数组
+/*
+数组的查询函数
+ */
+array_key_exists();//检查数组里是否有指定的键名或索引
+isset();//检测变量是否已设置并且非 NULL 
+array_keys();//返回数组中部分的或所有的键名 
+in_array();//检查数组中是否存在某个值
+array_search();//在数组中搜索给定的值，如果成功则返回首个相应的键名
+1、isset()和 array_key_exists()的却别在于：
+	$lamp=array("hello"=>null);
+	isset($lamp);//将会返回假
+	array_key_exists($lamp);//将会返回真
