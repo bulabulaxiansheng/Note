@@ -103,3 +103,55 @@ array_reverse();//返回单元顺序相反的数组
 count();//count($arr,1);计算子数组
 array_count_values();//返回一个数组： 数组的键是 array 里单元的值； 数组的值是 array 单元的值出现的次数。
 array_unique();//移除数组中重复的值
+/*
+array_filter()回调函数
+ */
+function myfun($value){
+	if($value>=0)
+		return true;
+	else
+		return false;
+}
+var_dump(array_filter($arr,"myfun"));
+
+var_dump(array_filter($arr,function($value){
+	return !($value%2==0);
+}));
+/*
+array_walk()
+ */
+$arr=array(1,2,3,4,5);
+function myfun(&$value){
+	$value=$value*$value;
+}
+array_walk($arr,"myfun");
+/*
+array_map()
+ */
+$brr=array("one","two","three","five");
+$arr=array(1,2,3,4,5);
+function myfun($v,$bv){
+	return $v*$v*$v;
+}
+$rarr=array_map("myfun",$arr,$brr);
+/*
+PHP中的冒泡
+ */
+$arr=array(0,1,2,3,4,5,6,7,8,9);
+//从大到小的排序
+$len=count($arr);
+for($i=0;$i<$len-1;$i++){
+	for($j=0;$j<$len-1-$i;$j++){
+		if($arr[$j]<$arr[$j+1]){
+			$tmp=$arr[$j];
+			$arr[$j]=$arr[$j+1];
+			$arr[$j+1]=$tmp;
+		}
+	}
+}
+/*
+数组的拆分、合并、分解与结合
+ */
+array_slice();//取出一段数组
+array_splice();//删除一段数组，并用其他取代
+array_combine();//创建一个数组，用一个数组的值作为其键名，另一个数组的值作为其值
