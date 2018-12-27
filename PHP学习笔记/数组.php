@@ -155,3 +155,25 @@ for($i=0;$i<$len-1;$i++){
 array_slice();//取出一段数组
 array_splice();//删除一段数组，并用其他取代
 array_combine();//创建一个数组，用一个数组的值作为其键名，另一个数组的值作为其值
+array_merge();//合并一个或多个数组
+array_intersect(array1, array2)//计算数组的交集
+array_diff()//计算数组的差集
+$a=array("a","b","c");
+$b=array(10,11,12);
+
+$c=$a+$b;
+var_dump($c);//下标相同会覆盖
+
+/*
+数组与数据结构
+ */
+array_push();//压入栈，后进先出
+array_pop();//弹出
+array_unshift();//排队的形式，后进后出
+array_shift();//排队的形式，后进先出
+
+array_rand();//随机出来一个下标
+shuffle();//随机打乱数组
+array_sum();//计算数组的和
+range();
+array_fill();
