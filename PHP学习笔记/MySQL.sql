@@ -1,0 +1,28 @@
+/*
+创建数据库
+ */
+CREATE DATABASE t1;
+SHOW WARNINGS;//显示数据库警告的原因
+SHOW CREATE DATABASE t1;//查看数据库t1的编码方式
+CREATE DATABASE IF NOT EXISTS t2 CHARACTER SET gbk;
+/*
+数据库修改
+ */
+ALTER DATABASE t2 CHARACTER SET utf8;//更改t2数据库的编码为utf8
+/*
+删除数据库
+ */
+DROP DATABASE t1;//删除t1数据库
+SHOW DATABASE;//查询存在的数据库
+/*
+数据类型
+ */
+整型
+TINYINT
+SMALLINT
+MEDIUMINT
+INT
+BIGINT
+浮点型
+FLOAT
+DOUBLE
