@@ -26,3 +26,21 @@ BIGINT
 浮点型
 FLOAT
 DOUBLE
+日期时间
+YEAR
+TIME
+DATE
+DATETIME
+TIMESTAMP
+/*
+约束
+ */
+UNIQUE KEY
+唯一约束
+唯一约束可以保证记录的唯一性
+唯一约束的字段可以为空值(NULL)
+每张数据表可以存在多个唯一约束
+/*
+默认约束
+ */
+default
