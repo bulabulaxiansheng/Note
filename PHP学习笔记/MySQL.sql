@@ -137,3 +137,86 @@ mysql->CREATE TABLE test(
 	->username VARCHAR(20)
 );
 INSERT test(username) SELECT username FROM users WHERE age>=30;
+/*
+子查询
+ */
+子查询指嵌套在查询内部，且必须始终出现在圆括号内。
+子查询可以包含多个关键字或条件，如DISTINCT,GROUP BY,ORDER BY,LIMIT,函数等
+子查询的外层查询可以是:SELECT,INSERT,UPDATE,SET,或DO。
+子查询可以返回标量、一行、一列或子查询
+/*
+比较运算符子查询
+ */
+SELECT AVG(goods_price) FROM tdb_goods;//查询价格的平均值
+SELECT ROUND(AVG(goods_price),2) FROM tdb_goods;//价格四舍五入，保留小数点后两位
+SELECT goods_id,goods_name,goods_price FROM tdb_goods WHERE goods_price>=5636.36;
+//上面两个语句合并在一起进行子查询
+SELECT goods_id,goods_name,goods_price FROM tdb_goods WHERE goods_price>=(SELECT ROUND(AVG(goods_price),2) FROM tdb_goods);
+//查询超极本的价格
+SELECT goods_price FROM tdb_goods WHERE goods_cate='超极本';
+//查询那些商品的价格大于这些超极本
+/*
+ANY大于或小于任何一个数都行,等于任意值，ALL大于最大值，小于最小值，不等于任意值，SOME和ANY一样
+ */
+SELECT goods_id,goods_name,goods_price FROM tdb_goods WHERE (ALL(SELECT goods_price FROM tdb_goods WHERE goods_cate='超极本'));
+/*
+使用[NOT]IN的子查询
+ */
+=ANY运算符与IN等效
+!=ALL或<>ALL运算符与NOT IN等效;
+/*
+使用[NOT] EXISTS的子查询
+ */
+如果子查询返回任何行，EXISTS将返回TRUE;否则为FALSE
+/*
+使用INSERT...SELECT插入记录
+ */
+SELECT goods_cate FROM tdb_goods GROUP BY goods_cate;//查询商品分类的名字
+//商品分类插入另外一个表
+INSERT INTO tdb_goods_cates(cate_name) SELECT goods_cate FROM tdb_goods GROUP BY goods_cate;
+/*
+多表更新
+ */
+多表更新要进行连接
+UPDATE tdb_goods INNER JOIN tdb_goods_cates ON goods_cate=cate_name SET goods_cate=cate_id;
+/*
+CREATE...SELECT
+ */
+SELECT brand_name FROM tdb_goods GROUP BY brand_name;
+CREATE TABLE tdb_goods_brands(
+	brand_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	brand_name VARCHAR(40) NOT NULL
+)SELECT brand_name FROM tdb_goods GROUP BY brand_name;
+UPDATE tdb_goods INNER JOIN tdb_goods_brands ON brand_name=brand_name SET brand_name=brand_id;//这样不行，brand_name含义迷糊不清
+UPDATE tdb_goods AS g INNER JOIN tdb_goods_brands AS b ON g.brand_name=b.brand_name SET g.brand_name=b.brand_id;
+/*
+修改表的结构
+ */
+ALTER TABLE tdb_goods CHANGE goods_cate cate_id SMALLINT UNSIGNED NOT NULL,
+CHANGE brand_name brand_id SMALLINT UNSIGNED NOT NULL;
+/*
+将商品代表的数字由文字表示出来
+ */
+内连接INNER JOIN
+SELECT goods_id,goods_name,cate_name FROM tdb_goods INNER JOIN tdb_goods_cates ON tdb_goods.cate_id=tdb_goods_cates.cate_id;
+外链接OUTER JOIN
+SELECT goods_id,goods_name,cate_name FROM tdb_goods LEFT OUTER JOIN tdb_goods_cates ON tdb_goods.cate_id=tdb_goods_cates.cate_id;
+右外链接
+SELECT goods_id,goods_name,cate_name FROM tdb_goods RIGHT OUTER JOIN tdb_goods_cates ON tdb_goods.cate_id=tdb_goods_cates.cate_id;
+/*
+三张表做链接
+ */
+SELECT goods_id,goods_name,cate_name,brand_name,goods_price FROM tdb_goods AS G INNER JOIN tdb_goods_cates AS c ON g.cate_id=c.cate_id INNER JOIN tdb_goods_brands AS b ON g.brand_id=b.brand_id;
+/*
+无限极分类表设计
+ */
+//数据表自身连接
+SELECT s.type_id,s.type_name,p.type_name FROM tdb_goods_types AS s LEFT JOIN tdb_goods_types AS p ON s.parent_id=p.type_id;
+SELECT p.type_id,p.type_name,s.type_name FROM tdb_goods_types AS p LEFT JOIN tdb_goods_types AS s ON s.parent_id=p.type_id;
+SELECT p.type_id,p.type_name,s.type_name FROM tdb_goods_types AS p LEFT JOIN tdb_goods_types AS s ON s.parent_id=p.type_id GROUP BY p.type_name ORDER BY p.type_id;
+SELECT p.type_id,p.type_name,count(s.type_name) child_name FROM tdb_goods_types AS p LEFT JOIN tdb_goods_types AS s ON s.parent_id=p.type_id GROUP BY p.type_name ORDER BY p.type_id;
+/*
+多表的删除
+ */
+SELECT goods_id,goods_name FROM tdb_goods GROUP BY goods_name HAVING count(goods_name)>=2;
+DELETE t1 FROM tdb_goods AS t1 LEFT JOIN (SELECT goods_id,goods_name FROM tdb_goods GROUP BY goods_name HAVING count(goods_name)>=2) AS t2 ON t1.goods_name=t2.goods_name WHERE t1.goods_id>t2.goods_id;
