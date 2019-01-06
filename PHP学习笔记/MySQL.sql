@@ -17,6 +17,32 @@ SHOW DATABASE;//查询存在的数据库
 /*
 数据类型
  */
+-- 创建表时，设置表、字段编码
+use dbtest;
+drop table if exists tbtest;
+create table tbtest(
+id int(10) auto_increment,
+user_name varchar(60) CHARACTER SET GBK COLLATE gbk_chinese_ci,
+email varchar(60),
+PRIMARY key(id)
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- 修改数据库编码
+alter database dbtest CHARACTER SET GBK COLLATE gbk_chinese_ci;
+alter database dbtest CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- 修改表编码
+alter table tbtest character set utf8 COLLATE utf8_general_ci;
+-- 修改字段编码
+ALTER TABLE tbtest MODIFY email VARCHAR(60) CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- 查看所有的字符编码
+SHOW CHARACTER SET;
+-- 查看创建数据库的指令并查看数据库使用的编码
+show create database dbtest;
+-- 创建数据库时,设置数据库的编码方式 
+-- CHARACTER SET:指定数据库采用的字符集,utf8不能写成utf-8
+-- COLLATE:指定数据库字符集的排序规则,utf8的默认排序规则为utf8_general_ci（通过show character set查看）
+drop database if EXISTS dbtest;
+create database dbtest CHARACTER SET utf8 COLLATE utf8_general_ci;
+--
 整型
 TINYINT
 SMALLINT
