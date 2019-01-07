@@ -18,6 +18,11 @@ SHOW DATABASE;//查询存在的数据库
 数据类型
  */
 -- 创建表时，设置表、字段编码
+/*
+显示数据表的结构
+ */
+describe tdb_goods;
+--
 use dbtest;
 drop table if exists tbtest;
 create table tbtest(
@@ -246,3 +251,27 @@ SELECT p.type_id,p.type_name,count(s.type_name) child_name FROM tdb_goods_types 
  */
 SELECT goods_id,goods_name FROM tdb_goods GROUP BY goods_name HAVING count(goods_name)>=2;
 DELETE t1 FROM tdb_goods AS t1 LEFT JOIN (SELECT goods_id,goods_name FROM tdb_goods GROUP BY goods_name HAVING count(goods_name)>=2) AS t2 ON t1.goods_name=t2.goods_name WHERE t1.goods_id>t2.goods_id;
+/*
+字符函数
+ */
+--CONCAT字符连接
+将两个字段的信息连接在一起
+SELECT CONCAT(first_name,last_name) AS fullname FROM test;
+--CONCAT_WS()使用指定的分隔符进行字符连接
+SELECT CONCAT_WS('|','A','B','C');
+--FORMAT数字格式化
+SELECT FORMAT(12560.75,2);
+--LOWER()将字符转化为小写
+SELECT LOWER('MySQL');
+--UPPER()将字符转换为大写
+LEFT('MySQL',2)--获取字符串的前2个字符
+RIGHT('MySQL',2)--获取后两个字符
+LENGTH()--获取字符串的长度
+LTRIM()--删除字符左边的空格
+RTRIM()--删除字符右边的空格
+TRIM()--删除字符两边的空格
+SELECT TRIM(LEADING '?' FROM '??MySQL???');--删除??MySQL???前边的?号
+SELECT TRIM(TRAILING '?' FROM '??MySQL???');--删除??MySQL???后边的?号
+SELECT TRIM(BOTH '?' FROM '??MySQL???');--删除??MySQL???两边的?号
+--删除中间的?
+SELECT REPLACE('??My??SQL???','?','');替换?都为空字符串
