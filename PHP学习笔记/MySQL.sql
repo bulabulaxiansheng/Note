@@ -275,3 +275,59 @@ SELECT TRIM(TRAILING '?' FROM '??MySQL???');--删除??MySQL???后边的?号
 SELECT TRIM(BOTH '?' FROM '??MySQL???');--删除??MySQL???两边的?号
 --删除中间的?
 SELECT REPLACE('??My??SQL???','?','');替换?都为空字符串
+--SUBSTRING截取字符串
+SELECT SUBSTRING('MySQL',3);
+--LIKE
+SELECT * FROM test WHERE first_name LIKE '%o%';
+--告诉1后边的%不需要通配符解析了
+SELECT * FROM test WHERE first_name LIKE '%1%%' ESCAPE '1';
+--%代表的是任意字符，_代表的是任意一个字符
+/*
+数值运算符函数
+ */
+--CEIL()向上取整
+--FLOOR()向下取整
+--DIV 整数除法
+--MOD 取余数
+--POWER(3,3) 3的3次方
+--ROUND(3.652,2)保留小数点后两位
+--TRUNCATE(125.89,1) 输出125.8
+--BETWEEN...AND... 
+SELECT 15 BETWEEN 1 AND 22;
+SELECT 35 NOT BETWEEN 1 AND 22;
+--IN()
+SELECT 10 IN(5,10,15,20);
+SELECT 10 NOT IN(5,10,15,20);
+--NULL
+SELECT '' IS NULL;
+SELECT 0 IS NULL;
+SELECT * FROM test WHERE first_name IS NULL;
+/*
+日期时间函数
+ */
+--NOW()当前日期和时间
+SELECT NOW();
+--CURDATE()当前日期
+SELECT CURDATE();
+--CURTIME()当前时间
+SELECT CURTIME();
+--DATE_ADD()日期变化
+SELECT DATE_ADD('2014-3-12',INTERVAL 365 DAY);加365天
+SELECT DATE_ADD('2014-3-12',INTERVAL -365 DAY);减365天
+SELECT DATE_ADD('2014-3-12',INTERVAL 1 YEAR);加1年
+SELECT DATE_ADD('2014-3-12',INTERVAL 3 WEEK);加一个星期
+--DATEDIFF()日期差值
+SELECT DATEDIFF('2013-3-12','2014-3-12');两个日期相差多少天
+--DATE_FORMAT()日期格式化
+SELECT DATE_FORMAT('2014-3-12','%m/%d/%Y');
+/*
+信息函数
+ */
+--CONNECTION_ID() 连接ID
+SELECT CONNECTION_ID();
+--DATEBASE() 当前数据库
+SELECT DATEBASE();
+--LAST_INSERT_ID()最后插入的id
+SELECT LAST_INSERT_ID();
+--USER() 当前用户
+--VERSION()版本信息
